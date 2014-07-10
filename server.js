@@ -1,11 +1,13 @@
 //AMIGO INVISIBLE SERVIDOR
 var fs = require('fs');
 var express=require('express');
+var logfmt = require("logfmt");//heroku logs
 var app = express();
 var portada = fs.readFileSync('index.html','utf8');
 //servir ficheros /js, /css, /img,/fonts
 app.use(express.static(__dirname + '/public'));
 
+app.use(logfmt.requestLogger());
 
 //Datos
 //ejemplo: { fecha: '24-12-2014' ,
@@ -89,10 +91,11 @@ app.post('/sortear/:datos', function (req, res) {
     res.send( "ok" );
 });
 
+var port = Number(process.env.PORT || 5000);
+app.listen(port, function() {
+    console.log("Server listening on " + port);
+});
 
-var puerto = 5000;
-app.listen(puerto);
-console.log('Server running at http://127.0.0.1:'+puerto+'/');
 
 // -------------- utilidades ----------------
 function buscarPorNombre(nombre){

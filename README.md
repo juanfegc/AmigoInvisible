@@ -3,8 +3,10 @@ WebApp cliente web(jQuery)/servidor REST(NodeJS) para realizar el sorteo del ami
 Tambien se ha creado un cliente en NodeJS.
 
 ##Paso a paso:
+# ![AmigoInvisible](http://www.grails48.com/static/images/github-logo3.png)
+http://sorteo-amigo-invisible.herokuapp.com/
 
-[Heroku]:http://www.heroku.com
+[AmigoInvisible]:http://sorteo-amigo-invisible.herokuapp.com/
 
 # ![GitHub](http://www.grails48.com/static/images/github-logo3.png)
 Creamos un nuevo repositorio remoto en [GitHub] para nuestra app.
