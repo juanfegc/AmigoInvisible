@@ -1,25 +1,6 @@
 
-var usuarios = new Array;
-//--------------- CLASE USUARIO ----------------
-function Usuario(nombre, email) {
-    this.nombre = nombre;
-    this.email = email;
-}
-//----------------------------------------------
-//
-function to_string(){
-    var bd_string = "";
-    for ( var i = 0; i < usuarios.length; i ++ ) {
-        var nombre = usuarios[i].nombre;
-        var email = usuarios[i].email;
-        bd_string += "usuario["+i+"] = { 'nombre': "+nombre+", 'email': "+ email + " }\n";
-    }
-    return bd_string;
-}
-
-
 //----------------------------------------------------
-//             COMPROBAR DATOS FORMULARIO
+//           COMPROBAR DATOS FORMULARIO
 //----------------------------------------------------
 $('#paso1').mouseleave(function() {
   if( paso1Completado()){
@@ -34,11 +15,11 @@ function paso1Completado(){
   var lugar = $("#lugar").val();
   var presupuesto = $("#presupuesto").val();
   var paso1 = $("#paso1");
-  if(fecha!="" && lugar!="" && presupuesto!=""){
+  if(fecha!="" && lugar!="" && presupuesto!=""){//completado
     paso1.removeClass("alert-danger");
     paso1.addClass( "alert-success" );
     completado = true;
-  }else{
+  }else{//no completado
     paso1.removeClass("alert-success");
     paso1.addClass( "alert-danger" );
     completado = false;
@@ -53,6 +34,7 @@ $('#paso2').mouseleave(function() {
 
 function paso2Completado(){
   var paso2 = $("#paso2");
+  //obtengo el contador del ultimo usuario agregado
   var contador = $(".badge:last");
   var num = parseInt( contador.text(), 10 );
   var completado = true;
@@ -118,13 +100,13 @@ $("#eliminar").click(function( event ) {
     var eliminar = $("#controles").prev();
     eliminar.remove();
   }else{
-    $( "#dialog1" ).dialog( "open" );
+    $( "#dialogError" ).dialog( "open" );
   }
   //comprobar si el formulario esta completado
   paso2Completado();
 });
 //dialog error eliminar usuarios
-$( "#dialog1" ).dialog({
+$( "#dialogError" ).dialog({
   modal: true,
   buttons: { Ok: function() { $( this ).dialog( "close" );} },
   autoOpen: false,
@@ -141,17 +123,10 @@ $( "#dialog1" ).dialog({
 //boton sortear
 $("#sortear").click(function() {
   crearParticipantes();
-  var contador = $(".badge:last");
-  var num = parseInt( contador.text(), 10 );
-  for(var i=1; i<=num ; i++){
-    var nombre = $("#nombre"+i).val();
-    var email = $("#email"+i).val();
-    usuarios[i-1] = new Usuario(nombre, email);
-  }
-  $("#dialog2").dialog("open");
+  $("#dialogCompletado").dialog("open");
 });
 //dialog sorteando y enviando emails...
-$( "#dialog2" ).dialog({
+$( "#dialogCompletado" ).dialog({
   modal: true,
   buttons: { Ok: function() { $( this ).dialog( "close" );
                               $("#pasos").fadeOut("slow");
@@ -170,7 +145,10 @@ $( "#dialog2" ).dialog({
 //----------------
 //      AJAX
 //----------------
-var url = "http://127.0.0.1:8080";
+var url_local = "http://127.0.0.1:5000";//servidor local para desarrollo
+var url_prod = "http://sorteo-amigo-invisible.herokuapp.com";//servidor en produccion HEROKU
+var url = url_prod;
+
 
 function crearFiesta(){
   var fecha = $("#datepicker").val();

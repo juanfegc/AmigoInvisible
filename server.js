@@ -9,50 +9,50 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(logfmt.requestLogger());
 
-//Datos
+//Estructura de Datos al crear una fiesta antes de sortear
 //ejemplo: { fecha: '24-12-2014' ,
 //           lugar: 'mi casa',
-//           presupuesto: '5',
+//           presupuesto: '15',
 //           participantes: [ { nombre: 'juanfe', email: 'jf@gmail.com', amigo: 'nadie'},
 //                            { nombre: 'ines', email: 'ines@yahoo.es', amigo: 'nadie'},
 //                            { nombre: 'fer', email: 'fer@gmail.com', amigo: 'nadie'} ]
 //         }
 var fiesta = new Object();
-var fecha, lugar, presupuesto;
-var participantes = new Array();
+var fecha, lugar, presupuesto, participantes;
 
+//GET
+//servir el index.html
 app.get('/', function (req, res) {
     res.send(portada);
 });
 
-
 //PUT crea la fiesta
-//curl -X PUT http://127.0.0.1:8080/fiesta/fecha/lugar/presupuesto
+//curl -X PUT http://127.0.0.1:5000/fiesta/fecha/lugar/presupuesto
 app.put('/fiesta/:fecha/:lugar/:presupuesto', function( req,res ) {
     fiesta = {  fecha: req.params.fecha ,
                 lugar: req.params.lugar,
                 presupuesto: req.params.presupuesto,
-                participantes: participantes };
+                participantes: new Array() };
     res.send('Fiesta creada '+ JSON.stringify(fiesta) + "\n");
 });
 //POST crea/modificar la fiesta
-//curl -X POST http://127.0.0.1:8080/fiesta/fecha/lugar/presupuesto
+//curl -X POST http://127.0.0.1:5000/fiesta/fecha/lugar/presupuesto
 app.post('/fiesta/:fecha/:lugar/:presupuesto', function( req,res ) {
     fiesta = {  fecha: req.params.fecha ,
                 lugar: req.params.lugar,
                 presupuesto: req.params.presupuesto,
-                participantes: participantes };
+                participantes: new Array() };
     res.send('Fiesta modificada '+ JSON.stringify(fiesta) + "\n");
 });
 //GET obtiene datos de la fiesta
-//curl http://127.0.0.1:8080/fiesta/
+//curl http://127.0.0.1:5000/fiesta/
 app.get('/fiesta/', function( req,res ) {
     res.send('Fiesta '+ JSON.stringify(fiesta) + "\n");
 });
-//POST agregar participante a la fiesta
-//curl -X POST http://127.0.0.1:8080/participante/nombre/email
+//POST crear/modificar participante a la fiesta
+//curl -X POST http://127.0.0.1:5000/participante/nombre/email
 app.post('/participante/:nombre/:email', function (req, res) {
-    var pos_usuario = buscarPorNombre(req.params.nombre);
+    var pos_usuario = buscarNombre(req.params.nombre);
     fiesta.participantes[pos_usuario]= {nombre: req.params.nombre, email: req.params.email, amigo: "nadie"};
     participantes = fiesta.participantes;
     res.contentType('application/json');
@@ -68,14 +68,14 @@ app.post('/participante/:id/:nombre/:email', function (req, res) {
     console.log( fiesta );
 });
 //GET obtiener participantes a la fiesta
-//curl http://127.0.0.1:8080/participantes
+//curl http://127.0.0.1:5000/participantes
 app.get('/participantes/', function (req, res) {
     res.contentType('application/json');
     res.send( fiesta.participantes );
     console.log( fiesta.participantes );
 });
 //GET sortear amigo invisible
-//curl  -X POST http://127.0.0.1:8080/sortear/
+//curl  -X POST http://127.0.0.1:5000/sortear/
 app.get('/sortear/', function (req, res) {
     sortear();
     //res.contentType('application/json');
@@ -83,7 +83,7 @@ app.get('/sortear/', function (req, res) {
     console.log( fiesta.participantes );
 });
 //hacer un sorteo del amigo invisible  pero con los datos recibidos
-//curl  -X POST http://127.0.0.1:8080/sortear/datos
+//curl  -X POST http://127.0.0.1:5000/sortear/datos
 app.post('/sortear/:datos', function (req, res) {
     var json_text = req.params.datos;
     var json_obj = JSON.parse(json_text);
@@ -98,14 +98,14 @@ app.listen(port, function() {
 
 
 // -------------- utilidades ----------------
-function buscarPorNombre(nombre){
+function buscarNombre(nombre){
     for ( var i = 0; i < fiesta.participantes.length; i ++ ) {
         var name = fiesta.participantes[i].nombre;
         if(name == nombre){
             return i;//devuelvo la posicion del array si lo encuentro
         }
     }
-    return fiesta.participantes.length;//si no lo encuentro posicion de nuevo elemento
+    return fiesta.participantes.length;//si no lo encuentro, devuelvo posicion donde ira un nuevo elemento
 }
 
 //----------------------
@@ -113,13 +113,14 @@ function buscarPorNombre(nombre){
 //----------------------
 // node mailer.js
 var nodemailer   = require("nodemailer");
+//datos configuracion servidor MailChimp
 var username = "juanfe.godoy@gmail.com"
   , password = "BR_JF0JTpJlYUWskqDsDsA";//API Keys
 
 // create reusable transport method (opens pool of SMTP connections)
 var transport = nodemailer.createTransport("SMTP", {
     host: "smtp.mandrillapp.com", // hostname
-    port: 587, // port for secure SMTP
+    port: 587, //port for secure SMTP
     auth: {
         user: username,
         pass: password

@@ -1,7 +1,10 @@
 //AMIGO INVISIBLE CLIENTE REST
 //cliente para el servidor: servert.js
 var rest = require('restler');
-var url = "http://127.0.0.1:8080";
+
+var url_local = "http://127.0.0.1:5000";//servidor local para desarrollo
+var url_prod = "http://sorteo-amigo-invisible.herokuapp.com";//servidor en produccion HEROKU
+var url = url_prod;
 
 //creamos una fiesta
 rest.put( url + "/fiesta/24-12-2014/Granada/15").on('complete', function( data ) {
