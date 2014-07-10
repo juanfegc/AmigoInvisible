@@ -2,11 +2,8 @@
 WebApp cliente web(jQuery)/servidor REST(NodeJS) para realizar el sorteo del amigo invisible desplegada en Heroku.
 Tambien se ha creado un cliente en NodeJS.
 
-##Paso a paso:
-# ![AmigoInvisible](http://www.grails48.com/static/images/github-logo3.png)
-http://sorteo-amigo-invisible.herokuapp.com/
-
-[AmigoInvisible]:http://sorteo-amigo-invisible.herokuapp.com/
+## http://sorteo-amigo-invisible.herokuapp.com/
+# ![AmigoInvisible](https://sites.google.com/site/eurekioslabs/img/amigo-invisible.png)
 
 # ![GitHub](http://www.grails48.com/static/images/github-logo3.png)
 Creamos un nuevo repositorio remoto en [GitHub] para nuestra app.
