@@ -1,4 +1,4 @@
-#AmigoInvisible Node.js/Heroku
+#AmigoInvisible
 WebApp cliente web(jQuery)/servidor REST(NodeJS) para realizar el sorteo del amigo invisible desplegada en Heroku.
 Tambien se ha creado un cliente en NodeJS.
 

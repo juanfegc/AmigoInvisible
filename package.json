@@ -4,6 +4,7 @@
   "description": "app para el sorteo del amigo invisible",
   "main": "server.js",
   "dependencies": {
+    "logfmt": "^1.1.2",
     "express": "~4.5.1",
     "nodemailer": "~0.7.1"
   },
