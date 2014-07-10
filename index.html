@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Amigo invisible</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/blitzer/jquery-ui.css" />
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+        <div class="col-md-3">
+          <img src="img/papanoel.png" class="img-responsive">
+        </div>
+        <div class="col-md-9">
+          <h1>Amigo invisible!</h1>
+          <p id="informacion">Sigue las instrucciones para jugar al amigo invisible</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="container" id="pasos" >
+
+      <!-- PASO 1 -->
+      <div class="row">
+        <div id="paso1" class="col-md-12 alert alert-danger">
+          <h2>Paso 1: Introduce los datos de la Fiesta</h2>
+          <div class="row">
+            <div class="col-md-3 col-md-offset-1">
+              <div class="input-group">
+                <img src="img/calendario.png" class="img-responsive">
+                <span class="input-group-addon">Fecha</span>
+                <input id="datepicker" type="text" class="form-control" placeholder="¿Cuando?">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <img src="img/lugar.png" class="img-responsive">
+                <span class="input-group-addon">Lugar</span>
+                <input id="lugar" type="text" class="form-control" placeholder="¿Donde?">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group">
+                <img src="img/dolar.png" class="img-responsive">
+                <span class="input-group-addon">Presupuesto</span>
+                <input id="presupuesto" type="text" class="form-control" placeholder="¿Cuanto?">
+                <span class="input-group-addon">€</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="row">
+        <div id="paso2" class="col-md-12 alert alert-danger">
+          <div class="row">
+            <div class="col-md-10">
+              <h2>Paso 2: Introduce el nombre y e-mail de los participantes</h2>
+            </div>
+            <div class="col-md-2">
+              <img src="img/login.gif" class="img-responsive">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-9 col-md-offset-1">
+              <div class="input-group">
+                <span class="input-group-addon">Nombre</span>
+                <input id="nombre1" type="text" class="form-control" placeholder="nombre">
+                <span class="input-group-addon">E-mail</span>
+                <input id="email1" type="text" class="form-control" placeholder="e-mail">
+              </div>
+            </div>
+            <div class="col-md-1">
+              <span class="badge">1</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-9 col-md-offset-1">
+              <div class="input-group">
+                <span class="input-group-addon">Nombre</span>
+                <input id="nombre2" type="text" class="form-control" placeholder="nombre">
+                <span class="input-group-addon">E-mail</span>
+                <input id="email2" type="text" class="form-control" placeholder="e-mail">
+              </div>
+            </div>
+            <div class="col-md-1">
+              <span class="badge">2</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-9 col-md-offset-1">
+              <div class="input-group">
+                <span class="input-group-addon">Nombre</span>
+                <input id="nombre3" type="text" class="form-control" placeholder="nombre">
+                <span class="input-group-addon">E-mail</span>
+                <input id="email3" type="text" class="form-control" placeholder="e-mail">
+              </div>
+            </div>
+            <div class="col-md-1">
+              <span class="badge">3</span>
+            </div>
+          </div>
+
+          <div id="controles" class="row">
+            <div class="col-md-2 col-md-offset-10">
+              <button id="nuevo" type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <button id="eliminar" type="button" class="btn btn-danger">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- JQuery UI Dialog-->
+          <div id="dialog1" title="Error">
+            <p>No puedes eliminar mas participantes (el mínimo para jugar es 3)</p>
+            <img src="img/3player.png" class="imgcenter">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="row">
+        <div id="paso3" class="col-md-12 alert alert-danger">
+          <h2>Paso 3: Realiza el sorteo</h2>
+          <p>Se comunicará por e-mail a cada participante el resultado del sorteo y los datos de la fiesta.</p>
+          <button id="sortear" type="button" class="btn btn-danger btn-lg disabled"><span class="glyphicon glyphicon-envelope"></span> Sortear amigo invisible</button>
+        </div>
+      </div>
+
+      <!-- JQuery UI Dialog-->
+      <div id="dialog2" title="COMPLETADO">
+        <p>Se ha realizado el sorteo y enviado un e-mail a los participantes con el resultado...</p>
+        <img src="img/Mail2MailBox.gif" class="imgcenter">
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; juanfer 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- JQuery/JQuery UI core -->
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <!-- Mi código Javascript/jQuery -->
+    <script src="js/main.js"></script>
+
+    </body>
+</html>
