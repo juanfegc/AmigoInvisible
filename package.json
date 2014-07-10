@@ -1,0 +1,29 @@
+{
+  "name": "amigoInvisible",
+  "version": "1.0.0",
+  "description": "app para el sorteo del amigo invisible",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~4.5.1",
+    "nodemailer": "~0.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanfegc/AmigoInvisible.git"
+  },
+  "keywords": [
+    "nodeJS",
+    "jQuery"
+  ],
+  "author": "Juan Fernando Godoy Caba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanfegc/AmigoInvisible/issues"
+  },
+  "homepage": "https://github.com/juanfegc/AmigoInvisible"
+}

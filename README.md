@@ -1,5 +1,8 @@
-#PASO A PASO Node.js/Heroku
-Como desplegar una app Node.js en un PaaS como [Heroku], comentado paso a paso.
+#AmigoInvisible Node.js/Heroku
+WebApp cliente web(jQuery)/servidor REST(NodeJS) para realizar el sorteo del amigo invisible desplegada en Heroku.
+Tambien se ha creado un cliente en NodeJS.
+
+##Paso a paso:
 
 [Heroku]:http://www.heroku.com
 
@@ -12,11 +15,11 @@ Creamos un nuevo repositorio remoto en [GitHub] para nuestra app.
 Iniciamos el control de versiones del directorio local de nuestro proyecto, agregamos todos los archivos,
 guardamos, lo enlazamos con nuestro repositoiro remoto en GitHub y subimos los cambios.
 ``` sh
-cd myapp
+cd amigoInvisible
 git init
 git add .
 git commit -m "first commit"
-git remote add origin http://github.com/juanfegc/web-app.git
+git remote add origin http://github.com/juanfegc/AmigoInvisible.git
 git push -u origin master
 ```
 
@@ -24,10 +27,10 @@ git push -u origin master
 En el directorio raiz de nuestra app creamos un archivo **package.json** para declarar todas las dependencias de la app y las instalamos con npm.
 ``` sh
 npm init
-npm install express logfmt --save
+npm install express nodemailer logfmt --save
 ```
 También creamos un archivo **Procfile**
-con el contenido siguiente `web: node app.js` para indicarle a heroku como ejecutar nuestra app.
+con el contenido siguiente `web: node server.js` para indicarle a heroku como ejecutar nuestra app.
 
 # ![Heroku](http://www.treasuredata.com/img_logos/heroku.png)
 Necesitamos instalar la herramienta [Heroku toolbelt] para poder usar el cliente heroku en la linea de comandos.
