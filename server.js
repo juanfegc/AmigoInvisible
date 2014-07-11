@@ -79,7 +79,7 @@ app.get('/participantes/', function (req, res) {
     console.log( fiesta.participantes );
 });
 //GET sortear amigo invisible
-//curl  -X POST http://127.0.0.1:5000/sortear/
+//curl  http://127.0.0.1:5000/sortear/
 app.get('/sortear/', function (req, res) {
     sortear();
     //res.contentType('application/json');
