@@ -18,7 +18,8 @@ app.use(logfmt.requestLogger());
 //                            { nombre: 'fer', email: 'fer@gmail.com', amigo: 'nadie'} ]
 //         }
 var fiesta = new Object();
-var fecha, lugar, presupuesto, participantes;
+var fecha, lugar, presupuesto;
+var participantes = new Array();
 
 //GET
 //servir el index.html
@@ -32,8 +33,8 @@ app.put('/fiesta/:fecha/:lugar/:presupuesto', function( req,res ) {
     fiesta = {  fecha: req.params.fecha ,
                 lugar: req.params.lugar,
                 presupuesto: req.params.presupuesto,
-                participantes: new Array() };
-    res.send('Fiesta creada '+ JSON.stringify(fiesta) + "\n");
+                participantes: participantes };
+    res.send('Fiesta creada: '+ JSON.stringify(fiesta) + "\n");
 });
 //POST crea/modificar la fiesta
 //curl -X POST http://127.0.0.1:5000/fiesta/fecha/lugar/presupuesto
@@ -41,26 +42,29 @@ app.post('/fiesta/:fecha/:lugar/:presupuesto', function( req,res ) {
     fiesta = {  fecha: req.params.fecha ,
                 lugar: req.params.lugar,
                 presupuesto: req.params.presupuesto,
-                participantes: new Array() };
-    res.send('Fiesta modificada '+ JSON.stringify(fiesta) + "\n");
+                participantes: participantes };
+    res.send('Fiesta modificada: '+ JSON.stringify(fiesta) + "\n");
 });
 //GET obtiene datos de la fiesta
 //curl http://127.0.0.1:5000/fiesta/
 app.get('/fiesta/', function( req,res ) {
-    res.send('Fiesta '+ JSON.stringify(fiesta) + "\n");
+    res.send('Fiesta: '+ JSON.stringify(fiesta) + "\n");
 });
 //POST crear/modificar participante a la fiesta
 //curl -X POST http://127.0.0.1:5000/participante/nombre/email
 app.post('/participante/:nombre/:email', function (req, res) {
     var pos_usuario = buscarNombre(req.params.nombre);
-    fiesta.participantes[pos_usuario]= {nombre: req.params.nombre, email: req.params.email, amigo: "nadie"};
+    fiesta.participantes[pos_usuario] = {nombre: req.params.nombre, email: req.params.email, amigo: "nadie"};
     participantes = fiesta.participantes;
     res.contentType('application/json');
-    res.send( fiesta );
-    console.log( fiesta );
+    res.send( fiesta.participantes[pos_usuario] );
+    console.log( fiesta.participantes[pos_usuario] );
 });
-//modificar un participante
+//crear/modificar un participante
 app.post('/participante/:id/:nombre/:email', function (req, res) {
+    if(!fiesta.participantes){
+        fiesta.participantes = new Array();
+    }
     fiesta.participantes[req.params.id]= {nombre: req.params.nombre, email: req.params.email, amigo: "nadie"};
     participantes = fiesta.participantes;
     res.contentType('application/json');
@@ -79,7 +83,7 @@ app.get('/participantes/', function (req, res) {
 app.get('/sortear/', function (req, res) {
     sortear();
     //res.contentType('application/json');
-    res.send( 'Fiesta '+ JSON.stringify(fiesta) + "\n" );
+    res.send( 'Sorteado: '+ JSON.stringify(fiesta) + "\n" );
     console.log( fiesta.participantes );
 });
 //hacer un sorteo del amigo invisible  pero con los datos recibidos
@@ -99,13 +103,18 @@ app.listen(port, function() {
 
 // -------------- utilidades ----------------
 function buscarNombre(nombre){
-    for ( var i = 0; i < fiesta.participantes.length; i ++ ) {
-        var name = fiesta.participantes[i].nombre;
-        if(name == nombre){
-            return i;//devuelvo la posicion del array si lo encuentro
+    if(fiesta.participantes){
+        for ( var i = 0; i < fiesta.participantes.length; i ++ ) {
+            var name = fiesta.participantes[i].nombre;
+            if(name == nombre){
+                return i;//devuelvo la posicion del array si lo encuentro
+            }
         }
+        return fiesta.participantes.length;//si no lo encuentro, devuelvo posicion donde ira un nuevo elemento
+    }else{
+        fiesta.participantes = new Array();
+        return 0;
     }
-    return fiesta.participantes.length;//si no lo encuentro, devuelvo posicion donde ira un nuevo elemento
 }
 
 //----------------------
@@ -151,7 +160,7 @@ function sortear(){
     for(var i=0; i<fiesta.participantes.length; i++){
         var pos_amigo = amigos[i];
         fiesta.participantes[i].amigo = fiesta.participantes[pos_amigo].nombre;
-        //--------------------------- mailer ----------------------------
+        //--------------------------- MAILER ----------------------------
         var mailOptions = {
             from: "amigo@invisible.com>", // sender address
             to: fiesta.participantes[i].email, // list of receivers
@@ -159,7 +168,6 @@ function sortear(){
             text: "Hola "+fiesta.participantes[i].nombre+" te ha tocado "+fiesta.participantes[i].amigo+" como amigo invisible, la fiesta tendra lugar el "+fiesta.fecha+" en "+fiesta.lugar+" y el presupuesto max. para el regalo es de "+fiesta.prespuesto+"€ ", // plaintext body
             html: "<p><img src='https://sites.google.com/site/eurekioslabs/img/papanoel.png'>Hola "+fiesta.participantes[i].nombre+" te ha tocado <b>"+fiesta.participantes[i].amigo+"</b> como amigo invisible.La fiesta tendra lugar el "+fiesta.fecha+" en "+fiesta.lugar+" y el presupuesto max. para el regalo es de "+fiesta.presupuesto+"€ </p>" // html body
         }
-
         // send mail with defined transport object
         transport.sendMail(mailOptions, function(error, response){
             if(error){

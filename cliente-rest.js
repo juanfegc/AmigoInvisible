@@ -11,13 +11,13 @@ rest.put( url + "/fiesta/24-12-2014/Granada/15").on('complete', function( data )
     console.log( data );
 });
 //agregamos como minimo 3 participantes para poder jugar
-rest.post( url + "/participante/juanfe/juanfe.godoy@gmail.com").on('complete', function( data ) {
+rest.post( url + "/participante/0/juanfe/juanfe.godoy@gmail.com").on('complete', function( data ) {
     console.log( data );
 });
-rest.post( url + "/participante/ines/valentinness@hotmail.com").on('complete', function( data ) {
+rest.post( url + "/participante/1/ines/valentinness@hotmail.com").on('complete', function( data ) {
     console.log( data );
 });
-rest.post( url + "/participante/luigi/info@eurekios.com").on('complete', function( data ) {
+rest.post( url + "/participante/2/luigi/info@eurekios.com").on('complete', function( data ) {
     console.log( data );
 });
 

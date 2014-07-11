@@ -20,6 +20,7 @@ AmigoInvisible/
 
 ## http://sorteo-amigo-invisible.herokuapp.com/
 # ![AmigoInvisible](https://sites.google.com/site/eurekioslabs/img/amigo-invisible.png)
+Introducimos los datos de la fiesta (fecha, lugar, presupuesto para regalos), después introducimos los datos de los participantes (nombre, e-mail) y una vez rellenado todos los campos pulsamos el boton sortear y el servidor nos asignará un amigo invisible y lo comunicará por e-mail a cada usuario.
 
 ## PASO A PASO:
 
