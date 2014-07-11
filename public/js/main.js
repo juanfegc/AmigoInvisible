@@ -197,7 +197,6 @@ function sortear(){
   });
 }
 function borrarFiesta(){
-  alert("borrar");
   $.ajax({
     url: url+"/borrar/",
     type: 'DELETE',
