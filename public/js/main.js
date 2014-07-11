@@ -132,8 +132,8 @@ $( "#dialogError" ).dialog({
 $( "#dialogCompletado" ).dialog({
   modal: true,
   buttons: { Ok: function() { $( this ).dialog( "close" );
-                              $("#pasos").fadeOut("slow");
-                              $("#informacion").text( "GRACIAS por participar!!!!" )} },
+                              borrarFiesta();
+                             } },
   autoOpen: false,
   show: {
   effect: "clip",
@@ -194,5 +194,17 @@ function sortear(){
   })
   .fail(function() {
     alert( "Ha ocurrido un error al sortear" );
+  });
+}
+function borrarFiesta(){
+  alert("borrar");
+  $.ajax({
+    url: url+"/borrar/",
+    type: 'DELETE',
+    success: function(result) {
+        // Do something with the result
+        $("#pasos").fadeOut("slow");
+        $("#informacion").text( "GRACIAS por participar!!!!" )
+    }
   });
 }

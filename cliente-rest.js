@@ -6,6 +6,10 @@ var url_local = "http://127.0.0.1:5000";//servidor local para desarrollo
 var url_prod = "http://sorteo-amigo-invisible.herokuapp.com";//servidor en produccion HEROKU
 var url = url_prod;
 
+//borramos cualquier fiesta anterior
+rest.del( url + "/borrar/").on('complete', function( data ) {
+    console.log( data );
+});
 //creamos una fiesta
 rest.put( url + "/fiesta/24-12-2014/Granada/15").on('complete', function( data ) {
     console.log( data );

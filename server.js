@@ -86,13 +86,12 @@ app.get('/sortear/', function (req, res) {
     res.send( 'Sorteado: '+ JSON.stringify(fiesta) + "\n" );
     console.log( fiesta.participantes );
 });
-//hacer un sorteo del amigo invisible  pero con los datos recibidos
-//curl  -X POST http://127.0.0.1:5000/sortear/datos
-app.post('/sortear/:datos', function (req, res) {
-    var json_text = req.params.datos;
-    var json_obj = JSON.parse(json_text);
-    console.log( json_obj );
-    res.send( "ok" );
+//DELETE
+//curl -X DELETE http://127.0.0.1:5000/borrar/
+app.delete('/borrar/', function(req, res){
+    fiesta = {};
+    res.send('Datos borrados!!!');
+    console.log( fiesta );
 });
 
 var port = Number(process.env.PORT || 5000);
