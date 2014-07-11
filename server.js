@@ -2,6 +2,8 @@
 var fs = require('fs');
 var express=require('express');
 var logfmt = require("logfmt");//heroku logs
+var nodemailer = require("nodemailer");
+
 var app = express();
 var portada = fs.readFileSync('index.html','utf8');
 //servir ficheros /js, /css, /img,/fonts
@@ -119,8 +121,6 @@ function buscarNombre(nombre){
 //----------------------
 //       MAILER
 //----------------------
-// node mailer.js
-var nodemailer   = require("nodemailer");
 //datos configuracion servidor MailChimp
 var username = "juanfe.godoy@gmail.com"
   , password = "BR_JF0JTpJlYUWskqDsDsA";//API Keys
